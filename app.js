@@ -1034,6 +1034,21 @@ function buildOrderPayload() {
   };
 }
 
+function saveLastOrder(orderPayload) {
+  const serializedOrder = JSON.stringify(orderPayload);
+  try {
+    localStorage.setItem(lastOrderStorageKey, serializedOrder);
+  } catch {}
+  try {
+    sessionStorage.setItem(lastOrderStorageKey, serializedOrder);
+  } catch {}
+}
+
+function getLastOrder() {
+  const savedOrder = sessionStorage.getItem(lastOrderStorageKey) || localStorage.getItem(lastOrderStorageKey);
+  return savedOrder ? JSON.parse(savedOrder) : null;
+}
+
 async function submitOrder() {
   if (!orderForm.reportValidity()) return;
 
@@ -1050,6 +1065,7 @@ async function submitOrder() {
   showMessage(orderMessage, "Submitting order request...");
   try {
     const orderPayload = buildOrderPayload();
+    saveLastOrder(orderPayload);
     await fetch(orderLogEndpoint, {
       method: "POST",
       mode: "no-cors",
@@ -1058,7 +1074,6 @@ async function submitOrder() {
       },
       body: JSON.stringify(orderPayload)
     });
-    localStorage.setItem(lastOrderStorageKey, JSON.stringify(orderPayload));
     cart = [];
     saveCart();
     renderCart();
@@ -1098,7 +1113,7 @@ function renderThankYouSummary() {
   if (!summaryEl) return;
 
   try {
-    const order = JSON.parse(localStorage.getItem(lastOrderStorageKey));
+    const order = getLastOrder();
     if (!order || !Array.isArray(order.items) || !order.items.length) {
       summaryEl.innerHTML = '<div class="empty">No order summary is available on this device.</div>';
       return;
