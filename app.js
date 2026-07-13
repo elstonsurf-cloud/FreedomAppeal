@@ -2,6 +2,7 @@ const orderLogEndpoint = "https://script.google.com/macros/s/AKfycbzptCc_JTQ0ZZY
 const catalogStorageKey = "shopRequestCatalogV7";
 const cartStorageKey = "shopRequestCart";
 const lastOrderStorageKey = "shopRequestLastOrder";
+const pendingCartClearStorageKey = "shopRequestPendingCartClear";
 
 const defaultCatalog = [
   {
@@ -1049,6 +1050,21 @@ function getLastOrder() {
   return savedOrder ? JSON.parse(savedOrder) : null;
 }
 
+function buildOrderFromCartFallback() {
+  if (!cart.length) return null;
+
+  return {
+    contact: {},
+    items: cart.map((item) => ({
+      name: item.name,
+      quantity: item.quantity,
+      lineTotal: getCartItemLineTotal(item),
+      options: item.options
+    })),
+    estimatedTotal: getCartTotal()
+  };
+}
+
 async function submitOrder() {
   if (!orderForm.reportValidity()) return;
 
@@ -1074,9 +1090,7 @@ async function submitOrder() {
       },
       body: JSON.stringify(orderPayload)
     });
-    cart = [];
-    saveCart();
-    renderCart();
+    localStorage.setItem(pendingCartClearStorageKey, "yes");
     orderForm.reset();
     window.location.assign("thank-you.html");
   } catch {
@@ -1113,7 +1127,7 @@ function renderThankYouSummary() {
   if (!summaryEl) return;
 
   try {
-    const order = getLastOrder();
+    const order = getLastOrder() || buildOrderFromCartFallback();
     if (!order || !Array.isArray(order.items) || !order.items.length) {
       summaryEl.innerHTML = '<div class="empty">No order summary is available on this device.</div>';
       return;
@@ -1146,6 +1160,11 @@ function renderThankYouSummary() {
         </div>
       </div>
     `;
+    if (localStorage.getItem(pendingCartClearStorageKey) === "yes") {
+      localStorage.removeItem(pendingCartClearStorageKey);
+      cart = [];
+      saveCart();
+    }
   } catch {
     summaryEl.innerHTML = '<div class="empty">No order summary is available on this device.</div>';
   }
