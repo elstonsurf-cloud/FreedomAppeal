@@ -1238,6 +1238,10 @@ document.querySelector("#reset-catalog")?.addEventListener("click", () => {
   showMessage(adminMessage, "Catalog reset to defaults.");
 });
 
+if (adminPanel && window.location.pathname.endsWith("/admin.html")) {
+  renderAdminItems();
+}
+
 if (adminPanel && (window.location.hash === "#admin" || window.location.hash === "#backdoor")) {
   showAdminPanel();
 }
