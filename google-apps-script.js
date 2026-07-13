@@ -2,23 +2,40 @@ const sheetName = "Orders";
 
 function doPost(event) {
   const sheet = getOrdersSheet();
-  const order = JSON.parse(event.postData.contents || "{}");
-  const contact = order.contact || {};
-  const items = Array.isArray(order.items) ? order.items : [];
+  try {
+    const order = JSON.parse(event.postData.contents || "{}");
+    const contact = order.contact || {};
+    const items = Array.isArray(order.items) ? order.items : [];
 
-  sheet.appendRow([
-    new Date(),
-    contact.name || "",
-    contact.email || "",
-    contact.phone || "",
-    Number(order.estimatedTotal || 0),
-    items.map(formatItem).join("\n\n"),
-    order.summary || ""
-  ]);
+    sheet.appendRow([
+      new Date(),
+      contact.name || "",
+      contact.email || "",
+      contact.phone || "",
+      Number(order.estimatedTotal || 0),
+      items.map(formatItem).join("\n\n"),
+      order.summary || ""
+    ]);
 
-  return ContentService
-    .createTextOutput(JSON.stringify({ ok: true }))
-    .setMimeType(ContentService.MimeType.JSON);
+    return jsonResponse({ ok: true });
+  } catch (error) {
+    sheet.appendRow([
+      new Date(),
+      "SCRIPT ERROR",
+      "",
+      "",
+      "",
+      "",
+      String(error && error.message ? error.message : error)
+    ]);
+
+    return jsonResponse({ ok: false, error: String(error) });
+  }
+}
+
+function doGet() {
+  getOrdersSheet();
+  return jsonResponse({ ok: true, message: "Order logger is ready." });
 }
 
 function getOrdersSheet() {
@@ -55,4 +72,10 @@ function formatItem(item) {
     `Line: $${Number(item.lineTotal || 0).toFixed(2)}`,
     options
   ].filter(Boolean).join("\n");
+}
+
+function jsonResponse(value) {
+  return ContentService
+    .createTextOutput(JSON.stringify(value))
+    .setMimeType(ContentService.MimeType.JSON);
 }
