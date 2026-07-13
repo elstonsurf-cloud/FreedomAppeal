@@ -420,6 +420,14 @@ textarea:focus {
   gap: 12px;
 }
 
+.option-description {
+  display: block;
+  margin: 2px 0 6px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 400;
+}
+
 .price-row {
   display: flex;
   align-items: center;

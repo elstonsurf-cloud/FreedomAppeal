@@ -420,9 +420,9 @@ function getCartItemImage(cartItem) {
 function getCatalog() {
   try {
     const saved = normalizeCatalog(JSON.parse(localStorage.getItem(catalogStorageKey)));
-    return saved.length ? saved : defaultCatalog;
+    return saved.length ? saved : normalizeCatalog(defaultCatalog);
   } catch {
-    return defaultCatalog;
+    return normalizeCatalog(defaultCatalog);
   }
 }
 
@@ -443,17 +443,34 @@ function normalizeCatalog(value) {
       colorImages: normalizeColorImages(item.colorImages || {}),
       options: Array.isArray(item.options)
         ? item.options
-            .map((option) => ({
-              name: String(option.name || "").trim(),
-              values: Array.isArray(option.values)
-                ? option.values.map((entry) => String(entry).trim()).filter(Boolean)
-                : []
-            }))
+            .map((option) => normalizeOptionGroup(option))
             .filter((option) => option.name && option.values.length)
         : [],
       optionPrices: normalizeOptionPrices(item.optionPrices || {})
     }))
     .filter((item) => item.name && item.options.length);
+}
+
+function splitOptionGroupName(value) {
+  const rawName = String(value || "").trim();
+  const match = rawName.match(/^(.*?)\s*\(([^()]*)\)\s*$/);
+  if (!match) return { name: rawName, description: "" };
+
+  return {
+    name: match[1].trim(),
+    description: match[2].trim()
+  };
+}
+
+function normalizeOptionGroup(option) {
+  const parsed = splitOptionGroupName(option.name);
+  return {
+    name: parsed.name,
+    description: String(option.description || parsed.description || "").trim(),
+    values: Array.isArray(option.values)
+      ? option.values.map((entry) => String(entry).trim()).filter(Boolean)
+      : []
+  };
 }
 
 function normalizePrice(value) {
@@ -467,7 +484,7 @@ function normalizeOptionPrices(value) {
   return Object.fromEntries(
     Object.entries(value)
       .map(([groupName, prices]) => [
-        String(groupName || "").trim(),
+        splitOptionGroupName(groupName).name,
         Object.fromEntries(
           Object.entries(prices || {})
             .map(([optionValue, price]) => [String(optionValue || "").trim(), Number(price)])
@@ -649,7 +666,8 @@ function renderItemDetail(item) {
   const optionControls = item.options
     .map((option) => `
       <label>
-        ${escapeHtml(option.name)}
+        <span>${escapeHtml(option.name)}</span>
+        ${option.description ? `<span class="option-description">${escapeHtml(option.description)}</span>` : ""}
         <select data-option-name="${escapeHtml(option.name)}">
           ${option.values.map((value) => {
             const adjustment = getOptionPrice(item, option.name, value);
@@ -800,17 +818,23 @@ function parseOptionGroups(value) {
     .filter(Boolean)
     .map((line) => {
       const [name, rawValues] = line.split(":");
+      const parsedName = splitOptionGroupName(name);
       const values = (rawValues || "")
         .split(",")
         .map((item) => item.trim())
         .filter(Boolean);
-      return { name: (name || "").trim(), values };
+      return { name: parsedName.name, description: parsedName.description, values };
     })
     .filter((option) => option.name && option.values.length);
 }
 
 function optionsToText(options) {
-  return options.map((option) => `${option.name}: ${option.values.join(", ")}`).join("\n");
+  return options
+    .map((option) => {
+      const description = option.description ? ` (${option.description})` : "";
+      return `${option.name}${description}: ${option.values.join(", ")}`;
+    })
+    .join("\n");
 }
 
 function parseOptionPrices(value) {
@@ -824,7 +848,7 @@ function parseOptionPrices(value) {
       const separator = line.indexOf(":");
       if (separator < 0) return;
 
-      const groupName = line.slice(0, separator).trim();
+      const groupName = splitOptionGroupName(line.slice(0, separator)).name;
       const optionAndPrice = line.slice(separator + 1).trim();
       const match = optionAndPrice.match(/^(.+?)(?:\s*[,=]\s*|\s+)([+-]?\$?\d+(?:\.\d{1,2})?)$/);
       if (!groupName || !match) return;
