@@ -648,7 +648,7 @@ function renderCatalogTile(item) {
         <span class="product-tile-body">
           <strong>${escapeHtml(item.name)}</strong>
           <span class="product-tile-price">${escapeHtml(formatMoney(item.basePrice))}</span>
-          <span>${escapeHtml(item.description || "Choose options and add it to the cart.")}</span>
+          ${item.description ? `<span>${escapeHtml(item.description)}</span>` : ""}
         </span>
       </a>
     </article>
@@ -1151,7 +1151,6 @@ function renderThankYouSummary() {
     summaryEl.innerHTML = `
       <div class="thank-you-note">
         <strong>Screenshot this page for your records.</strong>
-        <span>This is your copy of the order request.</span>
       </div>
       <div class="order-summary-card">
         <div>
@@ -1161,11 +1160,16 @@ function renderThankYouSummary() {
         <div class="order-summary-items">
           ${order.items.map((item) => `
             <div class="order-summary-item">
-              <strong>${escapeHtml(item.quantity)} x ${escapeHtml(item.name)}</strong>
+              <div class="order-summary-image">
+                ${item.imageUrl ? `<img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.name)}">` : ""}
+              </div>
+              <div>
+                <strong>${escapeHtml(item.quantity)} x ${escapeHtml(item.name)}</strong>
+                <ul>
+                  ${(item.options || []).map((option) => `<li>${escapeHtml(option.name)}: ${escapeHtml(option.value)}</li>`).join("")}
+                </ul>
+              </div>
               <span>${escapeHtml(formatMoney(item.lineTotal || 0))}</span>
-              <ul>
-                ${(item.options || []).map((option) => `<li>${escapeHtml(option.name)}: ${escapeHtml(option.value)}</li>`).join("")}
-              </ul>
             </div>
           `).join("")}
         </div>

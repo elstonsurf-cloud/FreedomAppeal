@@ -496,10 +496,6 @@ textarea:focus {
   border-radius: 8px;
 }
 
-.thank-you-note span {
-  color: var(--muted);
-}
-
 .order-summary-card {
   display: grid;
   gap: 14px;
@@ -521,15 +517,33 @@ textarea:focus {
 
 .order-summary-item {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 4px 12px;
+  grid-template-columns: 72px 1fr auto;
+  gap: 12px;
+  align-items: start;
   padding: 12px;
   background: var(--soft);
   border-radius: 8px;
 }
 
+.order-summary-image {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.order-summary-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .order-summary-item ul {
-  grid-column: 1 / -1;
   margin: 4px 0 0;
   padding-left: 18px;
   color: var(--muted);
