@@ -1045,7 +1045,22 @@ function saveLastOrder(orderPayload) {
   } catch {}
 }
 
+function encodeOrderForUrl(orderPayload) {
+  return btoa(encodeURIComponent(JSON.stringify(orderPayload)));
+}
+
+function decodeOrderFromUrl(value) {
+  return JSON.parse(decodeURIComponent(atob(value)));
+}
+
 function getLastOrder() {
+  const hashMatch = window.location.hash.match(/^#order=(.+)$/);
+  if (hashMatch) {
+    const order = decodeOrderFromUrl(hashMatch[1]);
+    saveLastOrder(order);
+    return order;
+  }
+
   const savedOrder = sessionStorage.getItem(lastOrderStorageKey) || localStorage.getItem(lastOrderStorageKey);
   return savedOrder ? JSON.parse(savedOrder) : null;
 }
@@ -1092,7 +1107,7 @@ async function submitOrder() {
     });
     localStorage.setItem(pendingCartClearStorageKey, "yes");
     orderForm.reset();
-    window.location.assign("thank-you.html");
+    window.location.assign(`thank-you.html#order=${encodeURIComponent(encodeOrderForUrl(orderPayload))}`);
   } catch {
     showMessage(orderMessage, "The order could not be submitted. Please try again.", true);
   }
