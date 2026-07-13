@@ -3,38 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Shirt Order Request Shop</title>
+    <title>Admin - Shirt Shop</title>
     <link rel="stylesheet" href="styles.css?v=6">
   </head>
   <body>
     <header class="store-nav">
       <nav aria-label="Shop navigation">
-        <a href="#items-title">Shop</a>
+        <a href="index.html#items-title">Shop</a>
         <a class="cart-nav-link" href="cart.html">Cart <span class="cart-badge" data-cart-badge>0</span></a>
       </nav>
     </header>
 
     <main class="page">
-      <section id="top" class="store-hero" aria-label="Freedom Baseball Store">
-        <img src="images/freedom-baseball-store-header.jpg?v=6" alt="Freedom Baseball Store">
-      </section>
-
-      <section class="store-section" aria-labelledby="items-title">
-        <div class="section-heading">
-          <div>
-            <p class="kicker">Catalog</p>
-            <h2 id="items-title">Shop Items</h2>
-            <p>Click an item to choose options and add it to the cart.</p>
-          </div>
-        </div>
-        <div id="catalog" class="catalog"></div>
-      </section>
-
-      <section id="admin-panel" class="card admin-card" aria-labelledby="admin-title" hidden>
+      <section id="admin-panel" class="card admin-card" aria-labelledby="admin-title">
         <div class="section-heading">
           <div>
             <p class="kicker">Backdoor</p>
-            <h2 id="admin-title">Manage Items</h2>
+            <h1 id="admin-title">Manage Items</h1>
             <p>Add shop items and their options. Changes save in this browser.</p>
           </div>
         </div>
@@ -50,13 +35,13 @@
           <label>
             Image URLs
             <textarea name="itemImageUrls" rows="4" placeholder="One image per line&#10;images/team-shirt-front.jpg&#10;images/team-shirt-back.jpg"></textarea>
-            <span class="help-text">Google Drive share links are converted when possible, but repo images or direct image links work best.</span>
+            <span class="help-text">Repo images or direct image links work best.</span>
           </label>
 
           <label>
             Color preview images
             <textarea name="itemColorImages" rows="5" placeholder="Match color options to images&#10;Navy: images/navy-shirt.jpg&#10;White: images/white-shirt.jpg"></textarea>
-            <span class="help-text">When a shopper changes a Color or Shirt color option, the preview image swaps to the matching image.</span>
+            <span class="help-text">Color names should match your Color option values.</span>
           </label>
 
           <label>
