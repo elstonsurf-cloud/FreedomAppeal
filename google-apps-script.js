@@ -10,27 +10,6 @@ function doPost(event) {
     const items = Array.isArray(order.items) ? order.items : [];
     const submittedAt = new Date();
     const orderId = Utilities.getUuid();
-    let copySent = false;
-    let copyError = "";
-
-    if (contact.sendCopy && contact.email) {
-      try {
-        MailApp.sendEmail({
-          to: contact.email,
-          subject: "Your shirt order request",
-          body: [
-            "Thanks for your shirt order request.",
-            "",
-            order.summary || "",
-            "",
-            "Joey will follow up with you."
-          ].join("\n")
-        });
-        copySent = true;
-      } catch (error) {
-        copyError = String(error && error.message ? error.message : error);
-      }
-    }
 
     ordersSheet.appendRow([
       submittedAt,
@@ -40,9 +19,6 @@ function doPost(event) {
       contact.phone || "",
       Number(order.estimatedTotal || 0),
       items.length,
-      contact.sendCopy ? "Yes" : "No",
-      copySent ? "Yes" : "No",
-      copyError,
       order.summary || ""
     ]);
 
@@ -91,14 +67,6 @@ function doGet() {
   return jsonResponse({ ok: true, message: "Order logger is ready." });
 }
 
-function authorizeEmailPermission() {
-  MailApp.sendEmail({
-    to: Session.getActiveUser().getEmail(),
-    subject: "Shirt order email permission test",
-    body: "Email permissions are approved for the shirt order request app."
-  });
-}
-
 function getOrdersSheet() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = spreadsheet.getSheetByName(ordersSheetName);
@@ -115,9 +83,6 @@ function getOrdersSheet() {
     "Phone",
     "Estimated Total",
     "Item Count",
-    "Copy Requested",
-    "Copy Sent",
-    "Copy Error",
     "Full Summary"
   ]);
 

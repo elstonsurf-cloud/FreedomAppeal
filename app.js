@@ -1,5 +1,4 @@
-const requestEmail = "joeyelstonjr@gmail.com";
-const orderLogEndpoint = "https://script.google.com/macros/s/AKfycbz4w9AaKqUzytYOYW_LUsH5GytsF6abHGt8ziSe5nxMEsf4yf2NwBgu-8EBExA7jcVj/exec";
+const orderLogEndpoint = "https://script.google.com/macros/s/AKfycbzptCc_JTQ0ZZYp6CBi913yTXW9UgXLw2gceAMExfBPzgYbbZZw_zCjk9UVhuZYmCE/exec";
 const catalogStorageKey = "shopRequestCatalogV7";
 const cartStorageKey = "shopRequestCart";
 
@@ -994,8 +993,7 @@ function buildOrderPayload() {
     contact: {
       name: contact.name || "",
       email: contact.email || "",
-      phone: contact.phone || "",
-      sendCopy: contact.sendCopy === "yes"
+      phone: contact.phone || ""
     },
     items: cart.map((item) => ({
       itemId: item.itemId,
@@ -1019,36 +1017,29 @@ async function submitOrder() {
     return;
   }
 
-  if (orderLogEndpoint) {
-    showMessage(orderMessage, "Submitting order request...");
-    try {
-      await fetch(orderLogEndpoint, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify(buildOrderPayload())
-      });
-      cart = [];
-      saveCart();
-      renderCart();
-      orderForm.reset();
-      window.location.assign("thank-you.html");
-    } catch {
-      showMessage(orderMessage, "The order could not be submitted. Please try again.", true);
-    }
+  if (!orderLogEndpoint) {
+    showMessage(orderMessage, "Order logging is not configured. Please try again later.", true);
     return;
   }
 
-  const contact = Object.fromEntries(new FormData(orderForm).entries());
-  const subject = encodeURIComponent(`Order request from ${contact.name}`);
-  const body = encodeURIComponent(buildOrderSummary());
-  window.location.href = `mailto:${requestEmail}?subject=${subject}&body=${body}`;
-  showMessage(orderMessage, "Your email app should open with the order ready to send. After sending, continue to the confirmation page.");
-  setTimeout(() => {
+  showMessage(orderMessage, "Submitting order request...");
+  try {
+    await fetch(orderLogEndpoint, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(buildOrderPayload())
+    });
+    cart = [];
+    saveCart();
+    renderCart();
+    orderForm.reset();
     window.location.assign("thank-you.html");
-  }, 1200);
+  } catch {
+    showMessage(orderMessage, "The order could not be submitted. Please try again.", true);
+  }
 }
 
 function showAdminPanel() {
