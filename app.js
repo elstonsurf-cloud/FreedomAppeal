@@ -994,7 +994,8 @@ function buildOrderPayload() {
     contact: {
       name: contact.name || "",
       email: contact.email || "",
-      phone: contact.phone || ""
+      phone: contact.phone || "",
+      sendCopy: contact.sendCopy === "yes"
     },
     items: cart.map((item) => ({
       itemId: item.itemId,

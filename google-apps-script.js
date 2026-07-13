@@ -22,6 +22,20 @@ function doPost(event) {
       order.summary || ""
     ]);
 
+    if (contact.sendCopy && contact.email) {
+      MailApp.sendEmail({
+        to: contact.email,
+        subject: "Your shirt order request",
+        body: [
+          "Thanks for your shirt order request.",
+          "",
+          order.summary || "",
+          "",
+          "Joey will follow up with you."
+        ].join("\n")
+      });
+    }
+
     items.forEach((item, index) => {
       const options = optionsToColumns(item.options);
       orderItemsSheet.appendRow([
