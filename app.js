@@ -10,14 +10,14 @@ const defaultCatalog = [
     "description": "",
     "basePrice": 10,
     "imageUrls": [
-      "images/TF Home Plate White.jpg",
-      "images/TF Home Plate BLACK.jpg",
-      "images/TF Home Plate Tan.jpg"
+      "images/tf-home-plate-white.jpg",
+      "images/tf-home-plate-black.jpg",
+      "images/tf-home-plate-tan.jpg"
     ],
     "colorImages": {
-      "White": "images/TF Home Plate White.jpg",
-      "Black": "images/TF Home Plate BLACK.jpg",
-      "Tan": "images/TF Home Plate Tan.jpg"
+      "White": "images/tf-home-plate-white.jpg",
+      "Black": "images/tf-home-plate-black.jpg",
+      "Tan": "images/tf-home-plate-tan.jpg"
     },
     "options": [
       {
@@ -70,14 +70,14 @@ const defaultCatalog = [
     "description": "",
     "basePrice": 12,
     "imageUrls": [
-      "images/TF Motion White.jpg",
-      "images/TF Motion black.jpg",
-      "images/TF Motion Tan.jpg"
+      "images/tf-motion-white.jpg",
+      "images/tf-motion-black.jpg",
+      "images/tf-motion-tan.jpg"
     ],
     "colorImages": {
-      "White": "images/TF Motion White.jpg",
-      "Black": "images/TF Motion black.jpg",
-      "Tan": "images/TF Motion Tan.jpg"
+      "White": "images/tf-motion-white.jpg",
+      "Black": "images/tf-motion-black.jpg",
+      "Tan": "images/tf-motion-tan.jpg"
     },
     "options": [
       {
@@ -126,14 +126,14 @@ const defaultCatalog = [
     "description": "",
     "basePrice": 10,
     "imageUrls": [
-      "images/TF Eagle White.jpg",
-      "images/TF Eagle Black.jpg",
-      "images/TF Eagle Tan.jpg"
+      "images/tf-eagle-white.jpg",
+      "images/tf-eagle-black.jpg",
+      "images/tf-eagle-tan.jpg"
     ],
     "colorImages": {
-      "White": "images/TF Eagle White.jpg",
-      "Black": "images/TF Eagle Black.jpg",
-      "Tan": "images/TF Eagle Tan.jpg"
+      "White": "images/tf-eagle-white.jpg",
+      "Black": "images/tf-eagle-black.jpg",
+      "Tan": "images/tf-eagle-tan.jpg"
     },
     "options": [
       {
@@ -186,14 +186,14 @@ const defaultCatalog = [
     "description": "",
     "basePrice": 10,
     "imageUrls": [
-      "images/TF Bold White.jpg",
-      "images/TF Bold Black.jpg",
-      "images/TF Bold Tan.jpg"
+      "images/tf-bold-white.jpg",
+      "images/tf-bold-black.jpg",
+      "images/tf-bold-tan.jpg"
     ],
     "colorImages": {
-      "White": "images/TF Bold White.jpg",
-      "Black": "images/TF Bold Black.jpg",
-      "Tan": "images/TF Bold Tan.jpg"
+      "White": "images/tf-bold-white.jpg",
+      "Black": "images/tf-bold-black.jpg",
+      "Tan": "images/tf-bold-tan.jpg"
     },
     "options": [
       {
@@ -246,14 +246,14 @@ const defaultCatalog = [
     "description": "",
     "basePrice": 10,
     "imageUrls": [
-      "images/TF BoldEagle white.jpg",
-      "images/TF BoldEagle Black.jpg",
-      "images/TF BoldEagle Tan.jpg"
+      "images/tf-bold-eagle-white.jpg",
+      "images/tf-bold-eagle-black.jpg",
+      "images/tf-bold-eagle-tan.jpg"
     ],
     "colorImages": {
-      "White": "images/TF BoldEagle white.jpg",
-      "Black": "images/TF BoldEagle Black.jpg",
-      "Tan": "images/TF BoldEagle Tan.jpg"
+      "White": "images/tf-bold-eagle-white.jpg",
+      "Black": "images/tf-bold-eagle-black.jpg",
+      "Tan": "images/tf-bold-eagle-tan.jpg"
     },
     "options": [
       {
@@ -306,14 +306,14 @@ const defaultCatalog = [
     "description": "",
     "basePrice": 12,
     "imageUrls": [
-      "images/TF FREEDOM PLATE Black.jpg",
-      "images/TF FREEDOM PLATE Tan.jpg",
-      "images/TF FREEDOM PLATE White.jpg"
+      "images/freedom-plate-black.jpg",
+      "images/freedom-plate-tan.jpg",
+      "images/freedom-plate-white.jpg"
     ],
     "colorImages": {
-      "Black": "images/TF FREEDOM PLATE Black.jpg",
-      "Tan": "images/TF FREEDOM PLATE Tan.jpg",
-      "White": "images/TF FREEDOM PLATE White.jpg"
+      "Black": "images/freedom-plate-black.jpg",
+      "Tan": "images/freedom-plate-tan.jpg",
+      "White": "images/freedom-plate-white.jpg"
     },
     "options": [
       {
