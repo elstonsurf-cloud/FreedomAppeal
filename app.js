@@ -1,6 +1,6 @@
 const requestEmail = "joeyelstonjr@gmail.com";
 const orderLogEndpoint = "";
-const catalogStorageKey = "shopRequestCatalogV5";
+const catalogStorageKey = "shopRequestCatalogV7";
 const cartStorageKey = "shopRequestCart";
 
 const defaultCatalog = [
@@ -10,14 +10,14 @@ const defaultCatalog = [
     "description": "",
     "basePrice": 10,
     "imageUrls": [
-      "images/tf-home-plate-white.jpg",
-      "images/tf-home-plate-black.jpg",
-      "images/tf-home-plate-tan.jpg"
+      "images/tfhomeplatewhite.jpg",
+      "images/tfmomeplateblack.jpg",
+      "images/tfhomeplatetan.jpg"
     ],
     "colorImages": {
-      "White": "images/tf-home-plate-white.jpg",
-      "Black": "images/tf-home-plate-black.jpg",
-      "Tan": "images/tf-home-plate-tan.jpg"
+      "White": "images/tfhomeplatewhite.jpg",
+      "Black": "images/tfmomeplateblack.jpg",
+      "Tan": "images/tfhomeplatetan.jpg"
     },
     "options": [
       {
@@ -70,14 +70,14 @@ const defaultCatalog = [
     "description": "",
     "basePrice": 12,
     "imageUrls": [
-      "images/tf-motion-white.jpg",
-      "images/tf-motion-black.jpg",
-      "images/tf-motion-tan.jpg"
+      "images/tfmotionwhite.jpg",
+      "images/tfmotionblack.jpg",
+      "images/tfmotiontan.jpg"
     ],
     "colorImages": {
-      "White": "images/tf-motion-white.jpg",
-      "Black": "images/tf-motion-black.jpg",
-      "Tan": "images/tf-motion-tan.jpg"
+      "White": "images/tfmotionwhite.jpg",
+      "Black": "images/tfmotionblack.jpg",
+      "Tan": "images/tfmotiontan.jpg"
     },
     "options": [
       {
@@ -126,14 +126,14 @@ const defaultCatalog = [
     "description": "",
     "basePrice": 10,
     "imageUrls": [
-      "images/tf-eagle-white.jpg",
-      "images/tf-eagle-black.jpg",
-      "images/tf-eagle-tan.jpg"
+      "images/tfeaglewhite.jpg",
+      "images/tfeagleblack.jpg",
+      "images/tfeagletan.jpg"
     ],
     "colorImages": {
-      "White": "images/tf-eagle-white.jpg",
-      "Black": "images/tf-eagle-black.jpg",
-      "Tan": "images/tf-eagle-tan.jpg"
+      "White": "images/tfeaglewhite.jpg",
+      "Black": "images/tfeagleblack.jpg",
+      "Tan": "images/tfeagletan.jpg"
     },
     "options": [
       {
@@ -186,14 +186,14 @@ const defaultCatalog = [
     "description": "",
     "basePrice": 10,
     "imageUrls": [
-      "images/tf-bold-white.jpg",
-      "images/tf-bold-black.jpg",
-      "images/tf-bold-tan.jpg"
+      "images/tfboldwhite.jpg",
+      "images/tfboldblank.jpg",
+      "images/tfboldtan.jpg"
     ],
     "colorImages": {
-      "White": "images/tf-bold-white.jpg",
-      "Black": "images/tf-bold-black.jpg",
-      "Tan": "images/tf-bold-tan.jpg"
+      "White": "images/tfboldwhite.jpg",
+      "Black": "images/tfboldblank.jpg",
+      "Tan": "images/tfboldtan.jpg"
     },
     "options": [
       {
@@ -246,14 +246,14 @@ const defaultCatalog = [
     "description": "",
     "basePrice": 10,
     "imageUrls": [
-      "images/tf-bold-eagle-white.jpg",
-      "images/tf-bold-eagle-black.jpg",
-      "images/tf-bold-eagle-tan.jpg"
+      "images/tfboldeaglewhite.jpg",
+      "images/tfboldeagleblack.jpg",
+      "images/tfboldeagletan.jpg"
     ],
     "colorImages": {
-      "White": "images/tf-bold-eagle-white.jpg",
-      "Black": "images/tf-bold-eagle-black.jpg",
-      "Tan": "images/tf-bold-eagle-tan.jpg"
+      "White": "images/tfboldeaglewhite.jpg",
+      "Black": "images/tfboldeagleblack.jpg",
+      "Tan": "images/tfboldeagletan.jpg"
     },
     "options": [
       {
@@ -306,14 +306,14 @@ const defaultCatalog = [
     "description": "",
     "basePrice": 12,
     "imageUrls": [
-      "images/freedom-plate-black.jpg",
-      "images/freedom-plate-tan.jpg",
-      "images/freedom-plate-white.jpg"
+      "images/freedomplateblack.jpg",
+      "images/freedomplatetan.jpg",
+      "images/freedomplatewhite.jpg"
     ],
     "colorImages": {
-      "Black": "images/freedom-plate-black.jpg",
-      "Tan": "images/freedom-plate-tan.jpg",
-      "White": "images/freedom-plate-white.jpg"
+      "Black": "images/freedomplateblack.jpg",
+      "Tan": "images/freedomplatetan.jpg",
+      "White": "images/freedomplatewhite.jpg"
     },
     "options": [
       {
@@ -1033,7 +1033,7 @@ async function submitOrder() {
       saveCart();
       renderCart();
       orderForm.reset();
-      showMessage(orderMessage, "Order request submitted. Joey will follow up.");
+      window.location.assign("thank-you.html");
     } catch {
       showMessage(orderMessage, "The order could not be submitted. Please try again.", true);
     }
@@ -1044,7 +1044,10 @@ async function submitOrder() {
   const subject = encodeURIComponent(`Order request from ${contact.name}`);
   const body = encodeURIComponent(buildOrderSummary());
   window.location.href = `mailto:${requestEmail}?subject=${subject}&body=${body}`;
-  showMessage(orderMessage, "Your email app should open with the order ready to send.");
+  showMessage(orderMessage, "Your email app should open with the order ready to send. After sending, continue to the confirmation page.");
+  setTimeout(() => {
+    window.location.assign("thank-you.html");
+  }, 1200);
 }
 
 function showAdminPanel() {
