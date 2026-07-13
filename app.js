@@ -1,6 +1,6 @@
 const requestEmail = "joeyelstonjr@gmail.com";
 const orderLogEndpoint = "";
-const catalogStorageKey = "shopRequestCatalogV2";
+const catalogStorageKey = "shopRequestCatalogV3";
 const cartStorageKey = "shopRequestCart";
 
 const defaultCatalog = [

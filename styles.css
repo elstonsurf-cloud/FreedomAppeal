@@ -91,11 +91,17 @@ body {
 }
 
 .store-hero {
-  min-height: 260px;
   margin-bottom: 30px;
-  background: url("images/freedom-baseball-store-header.jpeg?v=3") center / cover;
+  overflow: hidden;
+  background: #fff;
   border-radius: 14px;
   box-shadow: 0 18px 42px rgba(15, 23, 42, 0.18);
+}
+
+.store-hero img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .admin-card {
