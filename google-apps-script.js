@@ -91,6 +91,14 @@ function doGet() {
   return jsonResponse({ ok: true, message: "Order logger is ready." });
 }
 
+function authorizeEmailPermission() {
+  MailApp.sendEmail({
+    to: Session.getActiveUser().getEmail(),
+    subject: "Shirt order email permission test",
+    body: "Email permissions are approved for the shirt order request app."
+  });
+}
+
 function getOrdersSheet() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = spreadsheet.getSheetByName(ordersSheetName);
