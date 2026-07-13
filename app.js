@@ -1,5 +1,5 @@
 const requestEmail = "joeyelstonjr@gmail.com";
-const orderLogEndpoint = "https://script.google.com/macros/s/AKfycbwAJwDBiv55plLwmUC7lf7AcbuMq0gq8NTyEYP5YizXYNqMxpSRdq7TYYERd4HEbP3m/exec";
+const orderLogEndpoint = "https://script.google.com/macros/s/AKfycbz4w9AaKqUzytYOYW_LUsH5GytsF6abHGt8ziSe5nxMEsf4yf2NwBgu-8EBExA7jcVj/exec";
 const catalogStorageKey = "shopRequestCatalogV7";
 const cartStorageKey = "shopRequestCart";
 
