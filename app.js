@@ -1,51 +1,359 @@
 const requestEmail = "joeyelstonjr@gmail.com";
 const orderLogEndpoint = "";
-const catalogStorageKey = "shopRequestCatalog";
+const catalogStorageKey = "shopRequestCatalogV2";
 const cartStorageKey = "shopRequestCart";
 
 const defaultCatalog = [
   {
-    id: "team-shirt",
-    name: "Team T-Shirt",
-    description: "Standard team shirt request.",
-    basePrice: 20,
-    imageUrls: [
-      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80"
+    "id": "tf-home-plate-mri6z96h",
+    "name": "TF Home Plate",
+    "description": "",
+    "basePrice": 10,
+    "imageUrls": [
+      "images/TF Home Plate White.jpg",
+      "images/TF Home Plate BLACK.jpg",
+      "images/TF Home Plate Tan.jpg"
     ],
-    colorImages: {
-      Navy: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=900&q=80",
-      White: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80"
+    "colorImages": {
+      "White": "images/TF Home Plate White.jpg",
+      "Black": "images/TF Home Plate BLACK.jpg",
+      "Tan": "images/TF Home Plate Tan.jpg"
     },
-    options: [
-      { name: "Size", values: ["Youth S", "Youth M", "Youth L", "Adult S", "Adult M", "Adult L", "Adult XL", "Adult 2XL"] },
-      { name: "Shirt color", values: ["Navy", "White", "Gray"] },
-      { name: "Print", values: ["Front only", "Front and back"] }
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Black",
+          "Tan",
+          "White"
+        ]
+      },
+      {
+        "name": "Type (Preview image doesn't change)",
+        "values": [
+          "Short Sleeve",
+          "Short Sleeve Hooded",
+          "Long Sleeve",
+          "Long Sleeve Hooded"
+        ]
+      },
+      {
+        "name": "Fit (Preview image doesn't change)",
+        "values": [
+          "Men's",
+          "Women's",
+          "Youth"
+        ]
+      },
+      {
+        "name": "Size",
+        "values": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ]
+      }
     ],
-    optionPrices: {
-      Size: { "Adult 2XL": 3 },
-      Print: { "Front and back": 5 }
+    "optionPrices": {
+      "Type (Preview image doesn't change)": {
+        "Short Sleeve Hooded": 4,
+        "Long Sleeve": 2,
+        "Long Sleeve Hooded": 5
+      }
     }
   },
   {
-    id: "hoodie",
-    name: "Hoodie",
-    description: "Pullover hoodie request.",
-    basePrice: 35,
-    imageUrls: [
-      "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=80"
+    "id": "tf-motion-mri7wub2",
+    "name": "TF Motion",
+    "description": "",
+    "basePrice": 12,
+    "imageUrls": [
+      "images/TF Motion White.jpg",
+      "images/TF Motion black.jpg",
+      "images/TF Motion Tan.jpg"
     ],
-    colorImages: {
-      Gray: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=80"
+    "colorImages": {
+      "White": "images/TF Motion White.jpg",
+      "Black": "images/TF Motion black.jpg",
+      "Tan": "images/TF Motion Tan.jpg"
     },
-    options: [
-      { name: "Size", values: ["Youth M", "Youth L", "Adult S", "Adult M", "Adult L", "Adult XL", "Adult 2XL"] },
-      { name: "Color", values: ["Navy", "Gray", "Black"] },
-      { name: "Print", values: ["Front only", "Front and back"] }
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "White",
+          "Black",
+          "Tan"
+        ]
+      },
+      {
+        "name": "Type (Preview image doesn't change)",
+        "values": [
+          "Short Sleeve",
+          "Long Sleeve"
+        ]
+      },
+      {
+        "name": "Fit (Preview image doesn't change)",
+        "values": [
+          "Men's",
+          "Women's",
+          "Youth"
+        ]
+      },
+      {
+        "name": "Size",
+        "values": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ]
+      }
     ],
-    optionPrices: {
-      Size: { "Adult 2XL": 4 },
-      Print: { "Front and back": 6 }
+    "optionPrices": {
+      "Type (Preview image doesn't change)": {
+        "Long Sleeve": 2
+      }
+    }
+  },
+  {
+    "id": "tf-eagle-mri7ynfr",
+    "name": "TF Eagle",
+    "description": "",
+    "basePrice": 10,
+    "imageUrls": [
+      "images/TF Eagle White.jpg",
+      "images/TF Eagle Black.jpg",
+      "images/TF Eagle Tan.jpg"
+    ],
+    "colorImages": {
+      "White": "images/TF Eagle White.jpg",
+      "Black": "images/TF Eagle Black.jpg",
+      "Tan": "images/TF Eagle Tan.jpg"
+    },
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Tan",
+          "White",
+          "Black"
+        ]
+      },
+      {
+        "name": "Type (Preview image doesn't change)",
+        "values": [
+          "Short Sleeve",
+          "Short Sleeve Hooded",
+          "Long Sleeve",
+          "Long Sleeve Hooded"
+        ]
+      },
+      {
+        "name": "Fit (Preview image doesn't change)",
+        "values": [
+          "Men's",
+          "Women's",
+          "Youth"
+        ]
+      },
+      {
+        "name": "Size",
+        "values": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ]
+      }
+    ],
+    "optionPrices": {
+      "Type (Preview image doesn't change)": {
+        "Short Sleeve Hooded": 4,
+        "Long Sleeve": 2,
+        "Long Sleeve Hooded": 5
+      }
+    }
+  },
+  {
+    "id": "tf-bold-mri87c4t",
+    "name": "TF Bold",
+    "description": "",
+    "basePrice": 10,
+    "imageUrls": [
+      "images/TF Bold White.jpg",
+      "images/TF Bold Black.jpg",
+      "images/TF Bold Tan.jpg"
+    ],
+    "colorImages": {
+      "White": "images/TF Bold White.jpg",
+      "Black": "images/TF Bold Black.jpg",
+      "Tan": "images/TF Bold Tan.jpg"
+    },
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Black",
+          "Tan",
+          "White"
+        ]
+      },
+      {
+        "name": "Type (Preview image doesn't change)",
+        "values": [
+          "Short Sleeve",
+          "Short Sleeve Hooded",
+          "Long Sleeve",
+          "Long Sleeve Hooded"
+        ]
+      },
+      {
+        "name": "Fit (Preview image doesn't change)",
+        "values": [
+          "Men's",
+          "Women's",
+          "Youth"
+        ]
+      },
+      {
+        "name": "Size",
+        "values": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ]
+      }
+    ],
+    "optionPrices": {
+      "Type (Preview image doesn't change)": {
+        "Short Sleeve Hooded": 4,
+        "Long Sleeve": 2,
+        "Long Sleeve Hooded": 5
+      }
+    }
+  },
+  {
+    "id": "tf-bold-eagle-mri8ha6o",
+    "name": "TF Bold Eagle",
+    "description": "",
+    "basePrice": 10,
+    "imageUrls": [
+      "images/TF BoldEagle white.jpg",
+      "images/TF BoldEagle Black.jpg",
+      "images/TF BoldEagle Tan.jpg"
+    ],
+    "colorImages": {
+      "White": "images/TF BoldEagle white.jpg",
+      "Black": "images/TF BoldEagle Black.jpg",
+      "Tan": "images/TF BoldEagle Tan.jpg"
+    },
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Tan",
+          "White",
+          "Black"
+        ]
+      },
+      {
+        "name": "Type (Preview image doesn't change)",
+        "values": [
+          "Short Sleeve",
+          "Short Sleeve Hooded",
+          "Long Sleeve",
+          "Long Sleeve Hooded"
+        ]
+      },
+      {
+        "name": "Fit (Preview image doesn't change)",
+        "values": [
+          "Men's",
+          "Women's",
+          "Youth"
+        ]
+      },
+      {
+        "name": "Size",
+        "values": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ]
+      }
+    ],
+    "optionPrices": {
+      "Type (Preview image doesn't change)": {
+        "Short Sleeve Hooded": 4,
+        "Long Sleeve": 2,
+        "Long Sleeve Hooded": 5
+      }
+    }
+  },
+  {
+    "id": "freedom-plate-mri99z2j",
+    "name": "Freedom Plate",
+    "description": "",
+    "basePrice": 12,
+    "imageUrls": [
+      "images/TF FREEDOM PLATE Black.jpg",
+      "images/TF FREEDOM PLATE Tan.jpg",
+      "images/TF FREEDOM PLATE White.jpg"
+    ],
+    "colorImages": {
+      "Black": "images/TF FREEDOM PLATE Black.jpg",
+      "Tan": "images/TF FREEDOM PLATE Tan.jpg",
+      "White": "images/TF FREEDOM PLATE White.jpg"
+    },
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Tan",
+          "Black",
+          "White"
+        ]
+      },
+      {
+        "name": "Type (Preview image doesn't change)",
+        "values": [
+          "Short Sleeve",
+          "Long Sleeve"
+        ]
+      },
+      {
+        "name": "Fit (Preview image doesn't change)",
+        "values": [
+          "Men's",
+          "Women's",
+          "Youth"
+        ]
+      },
+      {
+        "name": "Size",
+        "values": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "2XL"
+        ]
+      }
+    ],
+    "optionPrices": {
+      "Type (Preview image doesn't change)": {
+        "Long Sleeve": 2
+      }
     }
   }
 ];
