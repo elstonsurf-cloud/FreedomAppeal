@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cart - Shirt Shop</title>
+    <link rel="stylesheet" href="styles.css?v=2">
+  </head>
+  <body>
+    <header class="store-nav">
+      <nav aria-label="Shop navigation">
+        <a href="index.html#items-title">Shop</a>
+        <a class="cart-nav-link" href="cart.html">Cart <span class="cart-badge" data-cart-badge>0</span></a>
+      </nav>
+    </header>
+
+    <main class="page cart-page">
+      <section class="store-section cart-page-section" aria-labelledby="cart-title">
+        <div class="section-heading">
+          <div>
+            <p class="kicker">Order request</p>
+            <h1 id="cart-title">Cart</h1>
+            <p>No payment is collected here. Submit the request and Joey will follow up.</p>
+          </div>
+          <strong id="cart-count" class="cart-count">0 items</strong>
+        </div>
+
+        <div id="cart" class="cart-list"></div>
+        <div class="cart-total-row">
+          <span>Estimated total</span>
+          <strong id="cart-total">$0.00</strong>
+        </div>
+
+        <div class="cart-checkout">
+          <div>
+            <h2>Contact Details</h2>
+            <p>Only these details are needed before submitting.</p>
+          </div>
+
+          <form id="order-form" class="checkout-form">
+            <label>
+              Your name
+              <input name="name" autocomplete="name" required>
+            </label>
+
+            <label>
+              Email
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+
+            <label>
+              Phone
+              <input type="tel" name="phone" autocomplete="tel" required>
+            </label>
+          </form>
+
+          <div class="button-row">
+            <button class="button primary" type="button" id="submit-order">Submit order request</button>
+            <button class="button quiet" type="button" id="clear-cart">Clear cart</button>
+          </div>
+          <p id="order-message" class="message" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
