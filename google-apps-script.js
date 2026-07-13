@@ -10,6 +10,27 @@ function doPost(event) {
     const items = Array.isArray(order.items) ? order.items : [];
     const submittedAt = new Date();
     const orderId = Utilities.getUuid();
+    let copySent = false;
+    let copyError = "";
+
+    if (contact.sendCopy && contact.email) {
+      try {
+        MailApp.sendEmail({
+          to: contact.email,
+          subject: "Your shirt order request",
+          body: [
+            "Thanks for your shirt order request.",
+            "",
+            order.summary || "",
+            "",
+            "Joey will follow up with you."
+          ].join("\n")
+        });
+        copySent = true;
+      } catch (error) {
+        copyError = String(error && error.message ? error.message : error);
+      }
+    }
 
     ordersSheet.appendRow([
       submittedAt,
@@ -19,22 +40,11 @@ function doPost(event) {
       contact.phone || "",
       Number(order.estimatedTotal || 0),
       items.length,
+      contact.sendCopy ? "Yes" : "No",
+      copySent ? "Yes" : "No",
+      copyError,
       order.summary || ""
     ]);
-
-    if (contact.sendCopy && contact.email) {
-      MailApp.sendEmail({
-        to: contact.email,
-        subject: "Your shirt order request",
-        body: [
-          "Thanks for your shirt order request.",
-          "",
-          order.summary || "",
-          "",
-          "Joey will follow up with you."
-        ].join("\n")
-      });
-    }
 
     items.forEach((item, index) => {
       const options = optionsToColumns(item.options);
@@ -89,18 +99,19 @@ function getOrdersSheet() {
     sheet = spreadsheet.insertSheet(ordersSheetName);
   }
 
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow([
-      "Submitted",
-      "Order ID",
-      "Name",
-      "Email",
-      "Phone",
-      "Estimated Total",
-      "Item Count",
-      "Full Summary"
-    ]);
-  }
+  ensureHeaders(sheet, [
+    "Submitted",
+    "Order ID",
+    "Name",
+    "Email",
+    "Phone",
+    "Estimated Total",
+    "Item Count",
+    "Copy Requested",
+    "Copy Sent",
+    "Copy Error",
+    "Full Summary"
+  ]);
 
   return sheet;
 }
@@ -113,28 +124,35 @@ function getOrderItemsSheet() {
     sheet = spreadsheet.insertSheet(orderItemsSheetName);
   }
 
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow([
-      "Submitted",
-      "Order ID",
-      "Line",
-      "Name",
-      "Email",
-      "Phone",
-      "Item",
-      "Quantity",
-      "Unit Price",
-      "Line Total",
-      "Color",
-      "Size",
-      "Type",
-      "Fit",
-      "All Options",
-      "Image URL"
-    ]);
-  }
+  ensureHeaders(sheet, [
+    "Submitted",
+    "Order ID",
+    "Line",
+    "Name",
+    "Email",
+    "Phone",
+    "Item",
+    "Quantity",
+    "Unit Price",
+    "Line Total",
+    "Color",
+    "Size",
+    "Type",
+    "Fit",
+    "All Options",
+    "Image URL"
+  ]);
 
   return sheet;
+}
+
+function ensureHeaders(sheet, headers) {
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(headers);
+    return;
+  }
+
+  sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
 }
 
 function optionsToColumns(options) {
