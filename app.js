@@ -1,6 +1,7 @@
 const orderLogEndpoint = "https://script.google.com/macros/s/AKfycbzptCc_JTQ0ZZYp6CBi913yTXW9UgXLw2gceAMExfBPzgYbbZZw_zCjk9UVhuZYmCE/exec";
 const catalogStorageKey = "shopRequestCatalogV7";
 const cartStorageKey = "shopRequestCart";
+const lastOrderStorageKey = "shopRequestLastOrder";
 
 const defaultCatalog = [
   {
@@ -1048,14 +1049,16 @@ async function submitOrder() {
 
   showMessage(orderMessage, "Submitting order request...");
   try {
+    const orderPayload = buildOrderPayload();
     await fetch(orderLogEndpoint, {
       method: "POST",
       mode: "no-cors",
       headers: {
         "Content-Type": "text/plain;charset=utf-8"
       },
-      body: JSON.stringify(buildOrderPayload())
+      body: JSON.stringify(orderPayload)
     });
+    localStorage.setItem(lastOrderStorageKey, JSON.stringify(orderPayload));
     cart = [];
     saveCart();
     renderCart();
@@ -1088,6 +1091,49 @@ function renderCartCountBadges() {
     badge.textContent = String(quantity);
     badge.hidden = quantity === 0;
   });
+}
+
+function renderThankYouSummary() {
+  const summaryEl = document.querySelector("#thank-you-summary");
+  if (!summaryEl) return;
+
+  try {
+    const order = JSON.parse(localStorage.getItem(lastOrderStorageKey));
+    if (!order || !Array.isArray(order.items) || !order.items.length) {
+      summaryEl.innerHTML = '<div class="empty">No order summary is available on this device.</div>';
+      return;
+    }
+
+    summaryEl.innerHTML = `
+      <div class="thank-you-note">
+        <strong>Screenshot this page for your records.</strong>
+        <span>This is your copy of the order request.</span>
+      </div>
+      <div class="order-summary-card">
+        <div>
+          <strong>${escapeHtml(order.contact?.name || "")}</strong>
+          <p>${escapeHtml(order.contact?.email || "")}${order.contact?.phone ? ` | ${escapeHtml(order.contact.phone)}` : ""}</p>
+        </div>
+        <div class="order-summary-items">
+          ${order.items.map((item) => `
+            <div class="order-summary-item">
+              <strong>${escapeHtml(item.quantity)} x ${escapeHtml(item.name)}</strong>
+              <span>${escapeHtml(formatMoney(item.lineTotal || 0))}</span>
+              <ul>
+                ${(item.options || []).map((option) => `<li>${escapeHtml(option.name)}: ${escapeHtml(option.value)}</li>`).join("")}
+              </ul>
+            </div>
+          `).join("")}
+        </div>
+        <div class="order-summary-total">
+          <span>Estimated total</span>
+          <strong>${escapeHtml(formatMoney(order.estimatedTotal || 0))}</strong>
+        </div>
+      </div>
+    `;
+  } catch {
+    summaryEl.innerHTML = '<div class="empty">No order summary is available on this device.</div>';
+  }
 }
 
 function escapeHtml(value) {
@@ -1268,3 +1314,4 @@ if (adminPanel && (window.location.hash === "#admin" || window.location.hash ===
 if (catalogEl) renderCatalog();
 renderProductPage();
 renderCart();
+renderThankYouSummary();

@@ -481,6 +481,69 @@ textarea:focus {
   justify-content: center;
 }
 
+.thank-you-summary {
+  margin-top: 22px;
+  text-align: left;
+}
+
+.thank-you-note {
+  display: grid;
+  gap: 3px;
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+}
+
+.thank-you-note span {
+  color: var(--muted);
+}
+
+.order-summary-card {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.order-summary-card p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+.order-summary-items {
+  display: grid;
+  gap: 10px;
+}
+
+.order-summary-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  padding: 12px;
+  background: var(--soft);
+  border-radius: 8px;
+}
+
+.order-summary-item ul {
+  grid-column: 1 / -1;
+  margin: 4px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.order-summary-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 1.08rem;
+}
+
 .checkout-form {
   gap: 14px;
   max-width: 520px;
